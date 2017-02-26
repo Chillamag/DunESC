@@ -8,17 +8,21 @@ public class PlayerController : MonoBehaviour {
 
     private Vector3 dir;
     private SpriteRenderer mySpriteRenderer;
+    private Animator myAnim;
 
     // Use this for initialization
     void Start () {
         dir = Vector3.zero;
         mySpriteRenderer = GetComponentInChildren<SpriteRenderer>();
+        myAnim = GetComponentInChildren<Animator>();
+        myAnim.enabled = false;
     }
 	
 	// Update is called once per frame
 	void Update () {
         if (Input.GetMouseButtonDown(0)) {
-            if(dir == Vector3.back) {
+            myAnim.enabled = true;
+            if (dir == Vector3.back) {
                 mySpriteRenderer.flipX = true;
                 dir = Vector3.right;
             }else {
