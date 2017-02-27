@@ -43,12 +43,27 @@ public class PlayerController : MonoBehaviour {
 
         transform.Translate(dir * amountToMove);
 
+
+
 	}
     IEnumerator deleteStart() {
         yield return new WaitForSeconds(5);
         startToDelete.SetActive(false);
         curentTileToDelete.SetActive(false);
         startIsActive = false;
+    }
+
+    private void OnTriggerEnter(Collider other) {
+        if (other.tag == "Lava") {
+            Debug.Log("Lava");
+            Die();
+        }
+    }
+
+    void Die() {
+        //gameObject.transform.GetChild(0).gameObject.
+        mySpriteRenderer.color = new Color(1f, 0f, 0f, 1f);
+        myAnim.enabled = false;
     }
 
 }

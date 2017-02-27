@@ -35,7 +35,7 @@ public class TileManager : MonoBehaviour {
     // Use this for initialization
     void Start () {
 
-        CreateTiles(20);
+        CreateTiles(100);
 
         for (int i = 0; i < 50; i++) {
             SpawnTile();
@@ -63,7 +63,7 @@ public class TileManager : MonoBehaviour {
     public void SpawnTile() {
 
         if (LeftTiles.Count == 0 || RightTiles.Count == 0) {
-            CreateTiles(1);
+            CreateTiles(10);
         }
 
         int randomIndex = Random.Range(0, 2);
