@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class TileScript : MonoBehaviour {
 
-    private float fallDelay = 3;
+    private float fallDelay = 6;
 
 	// Use this for initialization
 	void Start () {
@@ -16,10 +16,11 @@ public class TileScript : MonoBehaviour {
 		
 	}
 
-    void OnTriggerExit(Collider other) {
+    void OnTriggerEnter(Collider other) {
         if(other.tag == "Player") {
             TileManager.Instance.SpawnTile();
             StartCoroutine(FallDown());
+            Debug.Log("Spawn");
         }
     }
 
@@ -27,20 +28,27 @@ public class TileScript : MonoBehaviour {
         yield return new WaitForSeconds(fallDelay);
         //GetComponent<Rigidbody>().isKinematic = false;
 
+        if (!PlayerController.dead) {
+            switch (gameObject.name) {
 
-        switch (gameObject.name) {
+                case "Tile_1":
+                    TileManager.Instance.Tile_1_Tiles.Push(gameObject);
+                    //gameObject.GetComponent<Rigidbody>().isKinematic = true;
+                    gameObject.SetActive(false);
+                    break;
 
-            case "LeftTile":
-                TileManager.Instance.LeftTiles.Push(gameObject);
-                //gameObject.GetComponent<Rigidbody>().isKinematic = true;
-                gameObject.SetActive(false);
-                break;
+                case "Tile_2":
+                    TileManager.Instance.Tile_2_Tiles.Push(gameObject);
+                    //gameObject.GetComponent<Rigidbody>().isKinematic = true;
+                    gameObject.SetActive(false);
+                    break;
 
-            case "RightTile":
-                TileManager.Instance.RightTiles.Push(gameObject);
-                //gameObject.GetComponent<Rigidbody>().isKinematic = true;
-                gameObject.SetActive(false);
-                break;
+                case "Tile_3":
+                    TileManager.Instance.Tile_3_Tiles.Push(gameObject);
+                    //gameObject.GetComponent<Rigidbody>().isKinematic = true;
+                    gameObject.SetActive(false);
+                    break;
+            }
         }
     }
 }

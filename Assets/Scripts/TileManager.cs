@@ -8,16 +8,22 @@ public class TileManager : MonoBehaviour {
 
     public GameObject currentTile;
 
-    private Stack<GameObject> leftTiles = new Stack<GameObject>();
-    public Stack<GameObject> LeftTiles {
-        get {return leftTiles;}
-        set {leftTiles = value;}
+    private Stack<GameObject> tile_1_Tiles = new Stack<GameObject>();
+    public Stack<GameObject> Tile_1_Tiles {
+        get {return tile_1_Tiles;}
+        set {tile_1_Tiles = value;}
     }
 
-    private Stack<GameObject> rightTiles = new Stack<GameObject>();
-    public Stack<GameObject> RightTiles {
-        get {return rightTiles;}
-        set {rightTiles = value;}
+    private Stack<GameObject> tile_2_Tiles = new Stack<GameObject>();
+    public Stack<GameObject> Tile_2_Tiles {
+        get { return tile_2_Tiles; }
+        set { tile_2_Tiles = value; }
+    }
+
+    private Stack<GameObject> tile_3_Tiles = new Stack<GameObject>();
+    public Stack<GameObject> Tile_3_Tiles {
+        get { return tile_3_Tiles; }
+        set { tile_3_Tiles = value; }
     }
 
     //Start singleton
@@ -35,9 +41,9 @@ public class TileManager : MonoBehaviour {
     // Use this for initialization
     void Start () {
 
-        CreateTiles(100);
+        CreateTiles(3);
 
-        for (int i = 0; i < 50; i++) {
+        for (int i = 0; i < 3; i++) {
             SpawnTile();
         }
 	}
@@ -49,12 +55,22 @@ public class TileManager : MonoBehaviour {
 
     public void CreateTiles(int amount) {
         for(int i = 0; i < amount; i++) {
-            LeftTiles.Push(Instantiate(tilePrefabs[0]));
-            RightTiles.Push(Instantiate(tilePrefabs[1]));
-            RightTiles.Peek().name = "RightTile";
-            RightTiles.Peek().SetActive(false);
-            LeftTiles.Peek().name = "LeftTile";
-            LeftTiles.Peek().SetActive(false);
+            Tile_1_Tiles.Push(Instantiate(tilePrefabs[0]));
+            Tile_1_Tiles.Peek().name = "Tile_1";
+            Debug.Log("Tile 1");
+            Tile_1_Tiles.Peek().SetActive(false);
+
+            Tile_2_Tiles.Push(Instantiate(tilePrefabs[1]));
+            Tile_2_Tiles.Peek().name = "Tile_2";
+            Debug.Log("Tile 2");
+            Tile_2_Tiles.Peek().SetActive(false);
+
+            Tile_3_Tiles.Push(Instantiate(tilePrefabs[2]));
+            Tile_3_Tiles.Peek().name = "Tile_3";
+            Debug.Log("Tile 3");
+            Tile_3_Tiles.Peek().SetActive(false);
+            
+            
         }
 
     }
@@ -62,21 +78,34 @@ public class TileManager : MonoBehaviour {
 
     public void SpawnTile() {
 
-        if (LeftTiles.Count == 0 || RightTiles.Count == 0) {
-            CreateTiles(10);
+        if (Tile_1_Tiles.Count == 0 || Tile_2_Tiles.Count == 0  || Tile_3_Tiles.Count == 0) {
+            Debug.Log("Create 3");
+            CreateTiles(1);
+            
         }
 
-        int randomIndex = Random.Range(0, 2);
+        int randomIndex = Random.Range(0, 3);
+        //int randomIndex = Random.Range(0, 1);
 
         if (randomIndex == 0) {
-            GameObject temp = LeftTiles.Pop();
+            GameObject temp = Tile_1_Tiles.Pop();
             temp.SetActive(true);
-            temp.transform.position = currentTile.transform.GetChild(0).transform.GetChild(randomIndex).position;
+            //temp.transform.position = currentTile.transform.GetChild(0).transform.GetChild(randomIndex).position;
+            temp.transform.position = currentTile.transform.GetChild(0).transform.GetChild(0).position;
             currentTile = temp;
+
         }else if(randomIndex == 1){
-            GameObject temp = RightTiles.Pop();
+            GameObject temp = Tile_2_Tiles.Pop();
             temp.SetActive(true);
-            temp.transform.position = currentTile.transform.GetChild(0).transform.GetChild(randomIndex).position;
+            //temp.transform.position = currentTile.transform.GetChild(0).transform.GetChild(randomIndex).position;
+            temp.transform.position = currentTile.transform.GetChild(0).transform.GetChild(0).position;
+            currentTile = temp;
+
+        } else if (randomIndex == 2) {
+            GameObject temp = Tile_3_Tiles.Pop();
+            temp.SetActive(true);
+            //temp.transform.position = currentTile.transform.GetChild(0).transform.GetChild(randomIndex).position;
+            temp.transform.position = currentTile.transform.GetChild(0).transform.GetChild(0).position;
             currentTile = temp;
         }
 
